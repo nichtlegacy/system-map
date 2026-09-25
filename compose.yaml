@@ -1,0 +1,34 @@
+services:
+  system-map:
+    # Published by .github/workflows/publish-image.yml after every green CI run
+    # on main. `build` stays next to it, so `docker compose up --build` serves
+    # your own map from this checkout without pushing anything.
+    image: ghcr.io/nichtlegacy/system-map:latest
+    build:
+      context: .
+      args:
+        # Your public URL, so link previews point at your host. Only used
+        # when building; the published image assumes localhost.
+        NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3000}
+    container_name: system-map
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-3000}:3000"
+
+    # The server only reads what is baked into the image, so the whole
+    # filesystem can be read-only; Next.js needs nothing but a scratch /tmp.
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+    pids_limit: 128
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

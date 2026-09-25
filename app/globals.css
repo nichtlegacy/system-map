@@ -1,0 +1,420 @@
+@import "@xyflow/react/dist/style.css";
+@import "tailwindcss";
+
+/* Semantic tokens (Vercel-style: surfaces, text layers, borders, state). */
+@theme {
+  --color-canvas: #0a0a0a;
+  --color-surface: #101010;
+  --color-surface-2: #161616;
+  --color-contrast: #1c1c1c;
+
+  --color-fg: #ededed;
+  --color-fg-2: #a1a1a1;
+  --color-fg-3: #6f6f6f;
+  /* the hover end of the text/solid-button ramp: brighter in dark, darker in light */
+  --color-fg-hover: #ffffff;
+  --color-heading: #ffffff;
+  --color-heading-2: #9b9b9b;
+
+  --color-line: #1f1f1f;
+  --color-line-2: #2b2b2b;
+  --color-line-3: #3d3d3d;
+
+  --color-accent: #ff7a1a;
+  --color-media: #60a5fa;
+  --color-success: #4b9e5f;
+
+  /* Canvas ink. Kept as tokens so the map can be re-themed for an export
+     without touching a single component. */
+  --color-edge-data: rgba(96, 165, 250, 0.5);
+  --color-edge-management: rgba(237, 237, 237, 0.22);
+  --color-edge-external: rgba(255, 122, 26, 0.4);
+  --color-edge-label: #d99a6c;
+  --color-frame-network: rgba(255, 122, 26, 0.22);
+  --color-dots: #232323;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-card: 8px;
+  --radius-frame: 12px;
+
+  /* Chrome: the depth cues that make the shell read as hardware rather than
+     a div with a border. Alpha values, so they sit on any surface. */
+  --color-bezel: rgba(255, 255, 255, 0.07);
+  --color-bezel-2: rgba(255, 255, 255, 0.045);
+  --color-lift: rgba(255, 255, 255, 0.055);
+  --color-recess: rgba(0, 0, 0, 0.5);
+  /* The switcher: its track sits below the rail, its thumb above it. Which
+     way round that is in colour depends on the theme, so both are tokens. */
+  --color-track: #0a0a0a;
+  --color-thumb: #1e1e1e;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* Chrome ----------------------------------------------------------------- */
+
+/**
+ * Three depths, used by the shell and nothing else.
+ *
+ *  - `bezel`  a raised plate: hairline enclosure plus a light edge on top
+ *  - `core`   a plate sunk into another one, for the canvas itself
+ *  - `well`   a track something sits *in*, for the switcher and its indicator
+ *
+ * Box-shadow rather than borders, so a hairline never takes layout space and
+ * the enclosure follows whatever radius the element is given.
+ */
+.bezel {
+  box-shadow:
+    inset 0 0 0 1px var(--color-bezel),
+    inset 0 1px 0 var(--color-lift);
+}
+
+.core {
+  box-shadow:
+    inset 0 0 0 1px var(--color-bezel-2),
+    0 1px 3px var(--color-recess);
+}
+
+/* Light: a sunken plate cannot cast a shadow outwards. */
+.theme-light .core {
+  box-shadow:
+    inset 0 0 0 1px var(--color-bezel-2),
+    inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.switch-track {
+  background: var(--color-track);
+}
+
+.switch-thumb {
+  background: var(--color-thumb);
+  box-shadow:
+    0 1px 2px var(--color-recess),
+    inset 0 0 0 1px var(--color-bezel);
+}
+
+.well {
+  box-shadow:
+    inset 0 1px 2px var(--color-recess),
+    inset 0 0 0 1px var(--color-bezel-2);
+}
+
+/* Canvas ---------------------------------------------------------------- */
+
+.react-flow {
+  --xy-background-color: var(--color-canvas);
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__node {
+  cursor: default;
+}
+
+/* Edges ---------------------------------------------------------------- */
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+/**
+ * Every wire drifts, so the map reads as something with traffic on it rather
+ * than a diagram of where cables would go. The dashes are set inline by the
+ * flavor; what is here is only the motion.
+ *
+ * One keyframe per flavor, because the offset has to land on a whole number of
+ * dash periods or the loop snaps back visibly once a cycle. Each is two
+ * periods: 10 for media, 9 for control, 11 for external. The durations are
+ * then chosen to put all three at the same ~8.5px/s, so the map moves at one
+ * speed and the difference between the wires stays in colour and pattern,
+ * where it carries meaning, rather than in how fast they run.
+ */
+
+.react-flow__edge.flavor-data.animated .react-flow__edge-path {
+  animation: drift-data 2.4s linear infinite;
+}
+
+.react-flow__edge.flavor-management.animated .react-flow__edge-path {
+  animation: drift-management 2.1s linear infinite;
+}
+
+.react-flow__edge.flavor-external.animated .react-flow__edge-path {
+  animation: drift-external 2.6s linear infinite;
+}
+
+@keyframes drift-data {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes drift-management {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+@keyframes drift-external {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
+
+/**
+ * The footer legend dims a whole flavor. Opacity on the edge group rather than
+ * the stroke, so the arrowhead goes with it, and low enough that the flavors
+ * left standing read cleanly while the wire is still visibly there.
+ */
+.react-flow__edge {
+  transition: opacity 150ms linear;
+}
+
+.react-flow__edge.edge-muted {
+  opacity: 0.08;
+}
+
+/*
+ * A lit flavor gets weight and motion rather than a colour of its own: the
+ * wire is already coloured by what it carries, and repainting it would say
+ * something the map does not mean. Both are set inline by the canvas — the
+ * flavor writes stroke-width there too, and a rule here would lose to it.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  .react-flow__edge {
+    transition: none;
+  }
+}
+
+.react-flow__edge-text {
+  font-family: var(--font-mono);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .react-flow__edge.flavor-data.animated .react-flow__edge-path,
+  .react-flow__edge.flavor-management.animated .react-flow__edge-path,
+  .react-flow__edge.flavor-external.animated .react-flow__edge-path {
+    animation: none;
+  }
+}
+
+/* Landing ---------------------------------------------------------------- */
+
+@theme {
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Themes ------------------------------------------------------------------ */
+
+/**
+ * Both themes are classes, not media queries: the site toggle puts one on
+ * <html>, and an export puts the one it needs on the flow viewport so the file
+ * does not follow the page. Every colour in the app resolves through these
+ * tokens, so no component needs a light branch.
+ */
+.theme-dark {
+  color-scheme: dark;
+
+  --color-canvas: #0a0a0a;
+  --color-surface: #101010;
+  --color-surface-2: #161616;
+  --color-contrast: #1c1c1c;
+
+  --color-fg: #ededed;
+  --color-fg-2: #a1a1a1;
+  --color-fg-3: #6f6f6f;
+  --color-fg-hover: #ffffff;
+  --color-heading: #ffffff;
+  --color-heading-2: #9b9b9b;
+
+  --color-line: #1f1f1f;
+  --color-line-2: #2b2b2b;
+  --color-line-3: #3d3d3d;
+
+  --color-accent: #ff7a1a;
+  --color-media: #60a5fa;
+  --color-success: #4b9e5f;
+
+  --color-edge-data: rgba(96, 165, 250, 0.5);
+  --color-edge-management: rgba(237, 237, 237, 0.22);
+  --color-edge-external: rgba(255, 122, 26, 0.4);
+  --color-edge-label: #d99a6c;
+  --color-frame-network: rgba(255, 122, 26, 0.22);
+  --color-dots: #232323;
+
+  /* Chrome: the depth cues that make the shell read as hardware rather than
+     a div with a border. Alpha values, so they sit on any surface. */
+  --color-bezel: rgba(255, 255, 255, 0.07);
+  --color-bezel-2: rgba(255, 255, 255, 0.045);
+  --color-lift: rgba(255, 255, 255, 0.055);
+  --color-recess: rgba(0, 0, 0, 0.5);
+  /* The switcher: its track sits below the rail, its thumb above it. Which
+     way round that is in colour depends on the theme, so both are tokens. */
+  --color-track: #0a0a0a;
+  --color-thumb: #1e1e1e;
+}
+
+.theme-light {
+  color-scheme: light;
+
+  --color-canvas: #ffffff;
+  --color-surface: #fcfcfc;
+  --color-surface-2: #f6f6f6;
+  --color-contrast: #efefef;
+
+  --color-fg: #171717;
+  --color-fg-2: #525252;
+  --color-fg-3: #757575;
+  --color-fg-hover: #000000;
+  --color-heading: #000000;
+  --color-heading-2: #666666;
+
+  --color-line: #dedede;
+  --color-line-2: #cfcfcf;
+  --color-line-3: #b0b0b0;
+
+  --color-accent: #c25000;
+  --color-media: #155db2;
+  --color-success: #2f7d43;
+
+  --color-edge-data: rgba(21, 93, 178, 0.55);
+  --color-edge-management: rgba(23, 23, 23, 0.38);
+  --color-edge-external: rgba(194, 80, 0, 0.55);
+  --color-edge-label: #9a4200;
+  --color-frame-network: rgba(194, 80, 0, 0.22);
+  --color-dots: #dcdcdc;
+
+  --color-bezel: rgba(0, 0, 0, 0.09);
+  --color-bezel-2: rgba(0, 0, 0, 0.055);
+  --color-lift: rgba(255, 255, 255, 0.9);
+  --color-recess: rgba(0, 0, 0, 0.07);
+  --color-track: #f0f0f0;
+  --color-thumb: #ffffff;
+}
+
+/* Zoom slider ------------------------------------------------------------- */
+
+.zoom-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-line-2);
+  cursor: ew-resize;
+}
+
+.zoom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  width: 10px;
+  border-radius: 9999px;
+  background: var(--color-fg-3);
+  transition: background-color 120ms linear;
+}
+
+.zoom-slider::-moz-range-thumb {
+  height: 10px;
+  width: 10px;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--color-fg-3);
+}
+
+.zoom-slider:hover::-webkit-slider-thumb,
+.zoom-slider:focus-visible::-webkit-slider-thumb {
+  background: var(--color-fg);
+}
+
+.zoom-slider:hover::-moz-range-thumb,
+.zoom-slider:focus-visible::-moz-range-thumb {
+  background: var(--color-fg);
+}
+
+.zoom-slider:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 6px;
+}
+
+/**
+ * The cards animate their colours, so a theme swap for an export would be read
+ * mid-transition and bake the old values into the file. Capture with motion
+ * switched off instead.
+ */
+.export-capture,
+.export-capture * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/**
+ * Lines and frame borders are translucent on purpose: they should sit quietly
+ * on the canvas. With the background switched off that translucency survives
+ * into the file, so a dark export dropped on white loses its wiring. These are
+ * the same colours already composited against their own canvas, which looks
+ * identical on the intended background and holds up on any other. Two classes
+ * beat the single-class theme blocks, whatever the source order.
+ */
+.export-capture.theme-dark {
+  --color-edge-data: #2f5480;
+  --color-edge-management: #3c3c3c;
+  --color-edge-external: #6c3710;
+  --color-frame-network: #40230e;
+}
+
+.export-capture.theme-light {
+  --color-edge-data: #81a8d6;
+  --color-edge-management: #a7a7a7;
+  --color-edge-external: #dd9f73;
+  --color-frame-network: #f2d8c7;
+}
+
+/* Theme-swapped assets: the hero's map preview is a real screenshot, so it
+   needs one per theme rather than a filter. */
+.theme-light .dark-only,
+html:not(.theme-light) .light-only {
+  display: none;
+}
+
+/**
+ * The hero sits above the fold, so it cannot wait for a scroll to be revealed
+ * like the sections below it. It plays once on load, in the reading order of
+ * the block: sentence, control, then the map itself.
+ */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.hero-rise {
+  animation: hero-rise 900ms var(--ease-fluid) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise {
+    animation: none;
+  }
+}

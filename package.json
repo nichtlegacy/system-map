@@ -1,0 +1,40 @@
+{
+  "name": "system-map",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "audit:geometry": "node scripts/audit-geometry.mjs example",
+    "audit:map": "node scripts/audit-map.mjs http://127.0.0.1:3000/example",
+    "audit:labels": "node scripts/audit-labels.mjs http://127.0.0.1:3000/example",
+    "audit:mobile": "node scripts/audit-mobile.mjs http://127.0.0.1:3000",
+    "posters": "node scripts/export-posters.mjs",
+    "site": "scripts/build-site.sh --serve",
+    "site:images": "node scripts/site-images.mjs",
+    "social": "node scripts/build-social.mjs"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.8.6",
+    "geist": "^1.7.2",
+    "html-to-image": "^1.11.13",
+    "lucide-react": "^0.475.0",
+    "next": "^16.3.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "playwright": "^1.62.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

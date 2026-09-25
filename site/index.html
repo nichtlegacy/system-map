@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>System Map — hand-placed system maps with React Flow and Next.js</title>
+<meta name="description" content="A Next.js starter for readable system maps: typed data, cards that say what they are, wires that say what they carry, PNG and SVG export in either theme, and audits that measure the layout.">
+<link rel="canonical" href="https://__DOMAIN__/">
+<meta name="author" content="nichtlegacy">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="System Map">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://__DOMAIN__/">
+<meta property="og:title" content="System Map — draw systems people can follow">
+<meta property="og:description" content="Hand-placed system maps for React Flow and Next.js: typed data, cards that say what they are, labelled wires, PNG and SVG export, and audits that measure the layout.">
+<meta property="og:image" content="https://__DOMAIN__/og.png">
+<meta property="og:image:secure_url" content="https://__DOMAIN__/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The System Map mark and the words “Draw systems people can follow.” beside a section of the example map.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="System Map — draw systems people can follow">
+<meta name="twitter:description" content="Hand-placed system maps for React Flow and Next.js, with PNG and SVG export and a live demo.">
+<meta name="twitter:image" content="https://__DOMAIN__/og.png">
+<meta name="twitter:image:alt" content="The System Map mark and the words “Draw systems people can follow.” beside a section of the example map.">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="icon" href="icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<link rel="preload" as="font" href="fonts/Geist-Variable.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="screenshots/example-dark.png" fetchpriority="high">
+<link rel="stylesheet" href="app.css">
+<script src="app.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://__DOMAIN__/#website",
+      "url": "https://__DOMAIN__/",
+      "name": "System Map",
+      "description": "Hand-placed system maps for React Flow and Next.js.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://__DOMAIN__/#author" },
+      "about": { "@id": "https://__DOMAIN__/#code" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://__DOMAIN__/#webpage",
+      "url": "https://__DOMAIN__/",
+      "name": "System Map — hand-placed system maps with React Flow and Next.js",
+      "isPartOf": { "@id": "https://__DOMAIN__/#website" },
+      "about": { "@id": "https://__DOMAIN__/#code" },
+      "primaryImageOfPage": { "@id": "https://__DOMAIN__/#primaryimage" },
+      "dateModified": "__BUILD_DATE__",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://__DOMAIN__/#primaryimage",
+      "url": "https://__DOMAIN__/og.png",
+      "contentUrl": "https://__DOMAIN__/og.png",
+      "width": 1200,
+      "height": 630,
+      "caption": "The System Map mark and the words “Draw systems people can follow.” beside a section of the example map."
+    },
+    {
+      "@type": "Person",
+      "@id": "https://__DOMAIN__/#author",
+      "name": "nichtlegacy",
+      "url": "https://github.com/nichtlegacy",
+      "sameAs": ["https://github.com/nichtlegacy"]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://__DOMAIN__/#code",
+      "name": "System Map",
+      "alternateName": ["React Flow system map starter", "Next.js architecture diagram starter"],
+      "description": "A Next.js starter for hand-placed, typed system maps built on React Flow: ten card kinds, three wire kinds, PNG and SVG export in either theme, and geometry audits that run in CI.",
+      "url": "https://__DOMAIN__/",
+      "codeRepository": "https://github.com/nichtlegacy/system-map",
+      "programmingLanguage": ["TypeScript", "React"],
+      "runtimePlatform": "Node.js 22",
+      "keywords": ["system map", "architecture diagram", "React Flow", "xyflow", "Next.js", "diagram as code"],
+      "license": "https://opensource.org/licenses/MIT",
+      "version": "__VERSION__",
+      "isAccessibleForFree": true,
+      "image": { "@id": "https://__DOMAIN__/#primaryimage" },
+      "screenshot": [
+        "https://__DOMAIN__/screenshots/example-dark.png",
+        "https://__DOMAIN__/screenshots/export-panel.png"
+      ],
+      "workExample": {
+        "@type": "WebApplication",
+        "name": "System Map live demo",
+        "url": "https://__DOMAIN__/demo/example/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Any modern browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      },
+      "author": { "@id": "https://__DOMAIN__/#author" },
+      "maintainer": { "@id": "https://__DOMAIN__/#author" },
+      "mainEntityOfPage": { "@id": "https://__DOMAIN__/#webpage" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-github" viewBox="0 0 16 16">
+    <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+  </symbol>
+  <!-- The brand mark: two inputs, one hub, the shape the maps are made of. -->
+  <symbol id="i-mark" viewBox="0 0 32 32">
+    <path d="M8 9h12.2M8 23h12.2M17 9v14" fill="none" stroke="#3d3d3d" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="6" cy="9" r="3.2" fill="#ededed"/>
+    <circle cx="6" cy="23" r="3.2" fill="#ededed"/>
+    <circle cx="24" cy="16" r="4" fill="#ff7a1a"/>
+  </symbol>
+  <symbol id="i-play" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 12h13m0 0-5-5m5 5-5 5M20 5v14"/>
+  </symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.2"/><path d="M15.5 8.5V6.7a2.2 2.2 0 0 0-2.2-2.2H6.7a2.2 2.2 0 0 0-2.2 2.2v6.6a2.2 2.2 0 0 0 2.2 2.2h1.8"/></g>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/>
+  </symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m6.5 9.5 5.5 5.5 5.5-5.5"/>
+  </symbol>
+  <!-- Nav glyphs. -->
+  <symbol id="i-cards" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="4" width="7.5" height="7" rx="1.6"/><rect x="13" y="4" width="7.5" height="7" rx="1.6"/><rect x="3.5" y="13" width="7.5" height="7" rx="1.6"/><rect x="13" y="13" width="7.5" height="7" rx="1.6"/></g>
+  </symbol>
+  <symbol id="i-map" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="7" r="2.2"/><circle cx="5.5" cy="17" r="2.2"/><circle cx="18.5" cy="12" r="2.6"/><path d="M7.7 7h4.3v10H7.7M12 12h3.9"/></g>
+  </symbol>
+  <symbol id="i-export" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M12 3.5v11m0 0 4.2-4.2M12 14.5l-4.2-4.2M4 16.5v2.2A1.8 1.8 0 0 0 5.8 20.5h12.4a1.8 1.8 0 0 0 1.8-1.8v-2.2"/>
+  </symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="8" width="18" height="8" rx="1.8"/><path d="M7 8v3M11 8v4M15 8v3M19 8v2"/></g>
+  </symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.6"/><path d="m7.5 9.5 3 2.5-3 2.5M12.5 15h4"/></g>
+  </symbol>
+  <!-- Card kinds, one glyph each. -->
+  <symbol id="k-service" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2.6"/><path d="M4 9.5h16" /><circle cx="16.5" cy="7.25" r=".9" fill="currentColor" stroke="none"/></g></symbol>
+  <symbol id="k-primary" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.8"/><path d="M7 9h6M7 13h10M7 16h7" stroke-linecap="round"/></g></symbol>
+  <symbol id="k-external" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2.6" stroke-dasharray="3 2.6"/><path d="M10 14l4-4m-3 0h3v3"/></g></symbol>
+  <symbol id="k-storage" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6.5" rx="7" ry="2.5"/><path d="M5 6.5v11c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-11M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></g></symbol>
+  <symbol id="k-artefact" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="14" rx="2.4"/><path d="M7.5 15v-2.5M11 15V10M14.5 15v-3.5M18 15V8.5" /></g></symbol>
+  <symbol id="k-infra" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="17" rx="2.6"/><path d="M3 9h18"/><rect x="7" y="12" width="10" height="5" rx="1.2"/></g></symbol>
+  <symbol id="k-cluster" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="17" rx="2.6"/><rect x="6.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="13" y="9" width="4.5" height="4.5" rx="1"/><path d="M6.5 6.5h5" stroke-linecap="round"/></g></symbol>
+  <symbol id="k-lane" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h3M10 6h3M16 6h4"/><path d="M5.5 10v10M11.5 10v10M17.5 10v10" stroke-dasharray="2 2.4"/></g></symbol>
+  <symbol id="k-stat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l4-5 3.5 3L16 8l4 3"/><path d="M4 20h16"/></g></symbol>
+  <symbol id="k-bars" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h14M4 12h9M4 17h5"/></g></symbol>
+</svg>
+
+<header class="top" id="top-bar">
+  <a class="mark" href="#top" aria-label="System Map, back to top">
+    <span class="mark-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-mark"/></svg></span>
+    <span>System Map</span>
+    <span class="mark-version">v__VERSION__</span>
+  </a>
+  <nav class="top-nav" aria-label="Sections">
+    <span class="nav-glow" aria-hidden="true"></span>
+    <a href="#cards"><svg width="15" height="15" aria-hidden="true"><use href="#i-cards"/></svg>Cards</a>
+    <a href="#map"><svg width="15" height="15" aria-hidden="true"><use href="#i-map"/></svg>Map</a>
+    <a href="#export"><svg width="15" height="15" aria-hidden="true"><use href="#i-export"/></svg>Export</a>
+    <a href="#audits"><svg width="15" height="15" aria-hidden="true"><use href="#i-ruler"/></svg>Audits</a>
+    <a href="#start"><svg width="15" height="15" aria-hidden="true"><use href="#i-terminal"/></svg>Start</a>
+  </nav>
+  <div class="top-actions">
+    <a class="icon-btn" href="https://github.com/nichtlegacy/system-map" rel="noopener" aria-label="Source code on GitHub">
+      <svg width="17" height="17" aria-hidden="true"><use href="#i-github"/></svg>
+    </a>
+    <a class="pill solid" href="demo/example/" aria-label="Open the live demo">
+      <svg width="15" height="15" aria-hidden="true"><use href="#i-play"/></svg>
+      <span>Live demo</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">
+          System maps
+          <span class="mark-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-mark"/></svg></span>
+          for React Flow and Next.js
+        </p>
+        <h1>Draw systems<br>people can follow.</h1>
+        <p class="lede">A starter for hand-placed maps: typed data, cards that say what they are, wires that say what they carry, and the whole canvas exported as PNG or SVG in either theme.</p>
+        <div class="actions">
+          <a class="pill solid lg" href="demo/example/">
+            <svg width="17" height="17" aria-hidden="true"><use href="#i-play"/></svg>
+            Open the live demo
+          </a>
+          <a class="pill ghost lg" href="https://github.com/nichtlegacy/system-map" rel="noopener">
+            <svg width="16" height="16" aria-hidden="true"><use href="#i-github"/></svg>
+            Source
+          </a>
+        </div>
+        <p class="specs">Free &amp; open source · MIT · Next.js 16 · React Flow 12 · v__VERSION__</p>
+      </div>
+
+      <!-- The real export of the example map, cut by `npm run posters`. -->
+      <div class="browser" id="browser">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="browser-url">__DOMAIN__/<b>demo/example</b></span>
+        </div>
+        <div class="browser-view">
+          <img src="screenshots/example-dark.png" width="4930" height="1698" fetchpriority="high"
+               alt="The example map: a client outside the system, a request API inside an edge host frame, a processing frame with a worker and two readings, one primary orchestrator card, and object storage with the rendered report beneath it.">
+          <a class="pill ghost browser-cta" href="demo/example/">
+            <svg width="15" height="15" aria-hidden="true"><use href="#i-play"/></svg>
+            Pan, zoom, export
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cards">
+    <div class="wrap">
+      <header class="section-head stack-head reveal">
+        <h2>Ten cards, three wires</h2>
+        <p>Each card kind is a React component with a fixed size, so layouts stay on a grid and the audits know what they measure. Colour says which family a card belongs to; the wire says what moves.</p>
+      </header>
+      <ul class="kinds reveal" id="kinds-list">
+        <li class="kind"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-service"/></svg><span><b>service</b><small>A normal running service</small></span></li>
+        <li class="kind"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-primary"/></svg><span><b>primaryService</b><small>The main decision point</small></span></li>
+        <li class="kind" data-family="outside"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-external"/></svg><span><b>external</b><small>Outside the boundary</small></span></li>
+        <li class="kind"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-storage"/></svg><span><b>storage</b><small>A path or a capacity</small></span></li>
+        <li class="kind"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-artefact"/></svg><span><b>artefact</b><small>The output, as a picture</small></span></li>
+        <li class="kind" data-family="frame"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-infra"/></svg><span><b>infra</b><small>A host with its listeners</small></span></li>
+        <li class="kind" data-family="frame"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-cluster"/></svg><span><b>cluster</b><small>A frame around related cards</small></span></li>
+        <li class="kind" data-family="frame"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-lane"/></svg><span><b>lane</b><small>Reading order, left to right</small></span></li>
+        <li class="kind" data-family="reading"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-stat"/></svg><span><b>stat</b><small>One derived figure</small></span></li>
+        <li class="kind" data-family="reading"><svg class="kind-glyph" width="20" height="20" aria-hidden="true"><use href="#k-bars"/></svg><span><b>bars</b><small>Ranked values, numbers shown</small></span></li>
+      </ul>
+      <button class="pill ghost kinds-toggle" type="button" aria-controls="kinds-list" aria-expanded="false" hidden>
+        <span>Show all 10 kinds</span>
+        <svg width="15" height="15" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+
+      <ul class="wires">
+        <li class="wire wire-data reveal">
+          <svg viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7H286"/><path class="arrow" d="M286 2l10 5-10 5z"/></svg>
+          <span><b>data</b><small>Payloads, jobs, stored records</small></span>
+        </li>
+        <li class="wire wire-management reveal">
+          <svg viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7H286"/><path class="arrow" d="M286 2l10 5-10 5z"/></svg>
+          <span><b>management</b><small>Control, state and health signals</small></span>
+        </li>
+        <li class="wire wire-external reveal">
+          <svg viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7H286"/><path class="arrow" d="M286 2l10 5-10 5z"/></svg>
+          <span><b>external</b><small>Anything crossing the boundary</small></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="map">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <h2>Cards that say what they are</h2>
+      </header>
+      <div class="features">
+        <article class="feature reveal">
+          <h3>Identity apart from state</h3>
+          <p>Name, role and address live in the topology. Latency, status and throughput live in state, ready to be fed by something live.</p>
+          <div class="feature-art cards art-blue">
+            <img src="screenshots/card-service.png" width="476" height="412" loading="lazy" alt="The Request API service card: an Online status, its role, a one-line description, latency and acceptance rate, and its address in mono">
+          </div>
+        </article>
+        <article class="feature reveal">
+          <h3>One card decides</h3>
+          <p>The primary card gets the room: headline figures, the states work moves through, and what came out the other end.</p>
+          <div class="feature-art cards art-orange">
+            <img src="screenshots/card-primary.png" width="860" height="746" loading="lazy" alt="The Orchestrator primary card with throughput, retries and success rate, then queued and running states beside completed and failed outcomes">
+          </div>
+        </article>
+        <article class="feature reveal">
+          <h3>Numbers you can read</h3>
+          <p>Readings print their values. Colour is never the only cue: every bar carries its figure, every status its word.</p>
+          <div class="feature-art cards art-green">
+            <img src="screenshots/card-bars.png" width="476" height="378" loading="lazy" alt="The Queue health bars card: completed 84 percent, waiting 12 percent, failed 4 percent, each with a bar and its number">
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="export">
+    <div class="wrap duo">
+      <div class="duo-media wash reveal">
+        <img class="window" src="screenshots/export-panel.png" width="544" height="666" loading="lazy" style="width: min(360px, 100%)"
+             alt="The export panel: dark or light, filled or transparent, 1x, 2x or 3x, then Save PNG, SVG or Copy">
+      </div>
+      <div class="duo-copy reveal">
+        <h2>Export the<br>whole canvas.</h2>
+        <p class="lede">PNG or SVG at 1×, 2× or 3×, dark or light, filled or transparent — the full graph, not the part on screen. The images on this page come out of that same panel.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="audits">
+    <div class="wrap duo flip">
+      <div class="duo-copy align-end reveal">
+        <h2>Measured,<br>not eyeballed.</h2>
+        <p class="lede">Positions are yours to place. Four audits check the result: wires through cards, labels crowding a plate, clipped text, and pages that scroll sideways on a phone. The first needs no browser and runs in CI.</p>
+      </div>
+      <div class="duo-media wash green reveal">
+        <!-- Real output of `npm run audit:geometry` on the example. -->
+        <div class="term" role="img" aria-label="Terminal running npm run audit:geometry: 8 cards, 2 frames, 7 flows, the five tightest passes, no geometry problems">
+          <div class="term-bar"><i></i><i></i><i></i><span>system-map</span></div>
+<pre class="term-body"><span class="t-dim">$</span> npm run audit:geometry
+
+<b>example</b> — 8 cards · 2 frames · 7 flows · extent 2352 × 736
+  tightest passes:
+    worker-accepted        <span class="t-val">144px</span> from queue-health
+    worker-orchestrator    <span class="t-val">180px</span> from queue-health
+    api-worker             <span class="t-val">180px</span> from accepted
+    orchestrator-archive   <span class="t-val">180px</span> from report
+    archive-report         <span class="t-val">256px</span> from orchestrator
+  <span class="t-ok">no geometry problems</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="data">
+    <div class="wrap duo">
+      <div class="duo-media wash warm reveal">
+        <div class="term code" role="img" aria-label="A service card and a data wire as they are written in data/example/topology.ts">
+          <div class="term-bar"><i></i><i></i><i></i><span>data/example/topology.ts</span></div>
+<pre class="term-body"><span class="c-com">// a card: who it is, and where</span>
+{
+  <span class="c-key">id</span>: <span class="c-str">"api"</span>,
+  <span class="c-key">position</span>: { x: 464, y: 240 },
+  <span class="c-key">name</span>: <span class="c-str">"Request API"</span>,
+  <span class="c-key">category</span>: <span class="c-str">"Validation · routing"</span>,
+  <span class="c-key">host</span>: <span class="c-str">"192.0.2.10:443"</span>,
+  <span class="c-key">icon</span>: Workflow,
+},
+
+<span class="c-com">// a wire: what it carries, and in which order</span>
+{
+  <span class="c-key">id</span>: <span class="c-str">"api-worker"</span>,
+  <span class="c-key">stage</span>: 2,
+  <span class="c-key">source</span>: <span class="c-str">"api"</span>, <span class="c-key">target</span>: <span class="c-str">"worker"</span>,
+  <span class="c-key">flavor</span>: <span class="c-str">"data"</span>,
+  <span class="c-key">label</span>: <span class="c-str">"job"</span>,
+},</pre>
+        </div>
+      </div>
+      <div class="duo-copy reveal">
+        <h2>Four files,<br>one map.</h2>
+        <p class="lede">No editor, no layout engine, no runtime service. A map is typed data you can review in a pull request.</p>
+        <ul class="files">
+          <li><code>topology.ts</code>Cards, frames, lanes and wires</li>
+          <li><code>state.ts</code>The values that change</li>
+          <li><code>index.ts</code>React Flow nodes, with sizes</li>
+          <li><code>counts.ts</code>Every number, derived</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section more" id="start">
+    <div class="wrap">
+      <div class="more-grid">
+        <article class="reveal">
+          <h3>Run it</h3>
+          <p>Clone the repository, install, and open <code>localhost:3000/example</code>:</p>
+          <button class="cmd" type="button" data-copy="git clone https://github.com/nichtlegacy/system-map.git && cd system-map && npm ci && npm run dev" aria-label="Copy command">
+            <span class="cmd-prompt" aria-hidden="true">$</span>
+            <code>git clone https://github.com/nichtlegacy/system-map.git && cd system-map && npm ci && npm run dev</code>
+            <svg class="cmd-icon" width="15" height="15" aria-hidden="true"><use href="#i-copy"/></svg>
+          </button>
+          <p class="fine">Node.js 22.18 or newer. Nothing else: no database, no account.</p>
+        </article>
+        <article class="reveal">
+          <h3>Run it in Docker</h3>
+          <p>Every green build on main publishes an image to the GitHub Container Registry:</p>
+          <button class="cmd" type="button" data-copy="docker run --rm -p 3000:3000 ghcr.io/nichtlegacy/system-map:latest" aria-label="Copy command">
+            <span class="cmd-prompt" aria-hidden="true">$</span>
+            <code>docker run --rm -p 3000:3000 ghcr.io/nichtlegacy/system-map:latest</code>
+            <svg class="cmd-icon" width="15" height="15" aria-hidden="true"><use href="#i-copy"/></svg>
+          </button>
+          <p class="fine">Or <code>docker compose up -d</code> with the included <code>compose.yaml</code> — read-only, no capabilities. Add <code>--build</code> to serve your own map.</p>
+        </article>
+        <article class="reveal">
+          <h3>Make it yours</h3>
+          <p>Copy <code>data/example/</code> and <code>app/example/</code>, then edit the four files. The renderer never imports your data, so a second map costs a folder and a route. Drawing it with a coding agent? The <a href="https://github.com/existential-birds/beagle/tree/main/plugins/beagle-react/skills/react-flow" rel="noopener">react-flow skill</a> teaches it the <code>@xyflow/react</code> API underneath:</p>
+          <button class="cmd" type="button" data-copy="npx skills add existential-birds/beagle --skill react-flow" aria-label="Copy command">
+            <span class="cmd-prompt" aria-hidden="true">$</span>
+            <code>npx skills add existential-birds/beagle --skill react-flow</code>
+            <svg class="cmd-icon" width="15" height="15" aria-hidden="true"><use href="#i-copy"/></svg>
+          </button>
+        </article>
+        <article class="reveal">
+          <h3>Fictional by design</h3>
+          <p>The example uses <code>example.com</code>, <code>192.0.2.0/24</code> and <code>2001:db8::/32</code> — addresses reserved for documentation — so a fork never starts out exposing a real network.</p>
+        </article>
+        <article class="reveal">
+          <h3>Releases</h3>
+          <p>Versioned with <a href="https://github.com/googleapis/release-please" rel="noopener">release-please</a> from Conventional Commits. Each release tags the image with its version and adds a <a href="https://github.com/nichtlegacy/system-map/blob/main/CHANGELOG.md" rel="noopener">changelog</a> entry.</p>
+        </article>
+        <article class="reveal">
+          <h3>What it is not</h3>
+          <p>Not a dashboard, not a diagram editor, not a live monitor. No analytics, no authentication, no telemetry. A map drawn once, so the next person can find their way without asking you.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p>
+    Built by <a href="https://github.com/nichtlegacy" rel="noopener">nichtlegacy</a> ·
+    <a href="https://github.com/nichtlegacy/system-map" rel="noopener">Source</a> ·
+    <a href="https://github.com/nichtlegacy/system-map/releases" rel="noopener">Releases</a> ·
+    <a href="demo/">Demo</a> ·
+    <a href="https://github.com/nichtlegacy/system-map/blob/main/LICENSE" rel="noopener">MIT</a>
+  </p>
+  <p class="credits">
+    Built on <a href="https://reactflow.dev" rel="noopener">React Flow</a>,
+    <a href="https://nextjs.org" rel="noopener">Next.js</a> and
+    <a href="https://vercel.com/font" rel="noopener">Geist</a>
+  </p>
+</footer>
+
+</body>
+</html>

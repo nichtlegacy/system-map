@@ -1,0 +1,11 @@
+node_modules
+.next
+.next-build
+_site
+.git
+.github
+docs
+site
+*.tsbuildinfo
+.env
+.env.*
