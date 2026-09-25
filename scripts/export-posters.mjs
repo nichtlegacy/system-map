@@ -23,13 +23,19 @@ import { chromium } from "playwright";
 const BASE = process.env.BASE ?? "http://localhost:3000";
 const OUT = new URL("../public/posters/", import.meta.url).pathname;
 
+const README = new URL("../.github/images/", import.meta.url).pathname;
+
 /**
  * The names are the ones app/page.tsx and README.md ask for. One file per
- * theme, so a light visitor gets a light map.
+ * theme, so a light visitor gets a light map. The landing page lays its own
+ * plate under the map, so its posters are transparent; GitHub has no plate,
+ * so the README's copies carry the canvas colour of their theme.
  */
 const POSTERS = [
-  { view: "example", theme: "dark", file: "example-dark.png" },
-  { view: "example", theme: "light", file: "example-light.png" },
+  { view: "example", theme: "dark", file: "example-dark.png", out: OUT, solid: false },
+  { view: "example", theme: "light", file: "example-light.png", out: OUT, solid: false },
+  { view: "example", theme: "dark", file: "readme-dark.png", out: README, solid: true },
+  { view: "example", theme: "light", file: "readme-light.png", out: README, solid: true },
 ];
 
 const only = process.argv.slice(2);
@@ -60,11 +66,11 @@ const context = await browser.newContext({
 
 const downloads = join(tmpdir(), "system-map-posters");
 await mkdir(downloads, { recursive: true });
-await mkdir(OUT, { recursive: true });
+for (const dir of new Set(wanted.map((p) => p.out))) await mkdir(dir, { recursive: true });
 
 let failed = 0;
 
-for (const { view, theme, file } of wanted) {
+for (const { view, theme, file, out, solid } of wanted) {
   const page = await context.newPage();
 
   try {
@@ -83,7 +89,7 @@ for (const { view, theme, file } of wanted) {
     // Transparent, so the plate's own canvas and dot grid show through, and
     // the file does not carry a second background of its own.
     await page.getByRole("button", { name: theme === "dark" ? "Dark" : "Light", exact: true }).click();
-    await page.getByRole("button", { name: "Transparent", exact: true }).click();
+    if (!solid) await page.getByRole("button", { name: "Transparent", exact: true }).click();
     // 2x. The example is ~2400 flow pixels wide, so this lands near 4800px
     // across — sharp in the landing plate and on a README at any zoom.
     await page.getByRole("button", { name: "2\u00d7", exact: true }).click();
@@ -93,7 +99,7 @@ for (const { view, theme, file } of wanted) {
       page.getByRole("button", { name: /Save PNG/ }).click(),
     ]);
 
-    await download.saveAs(join(OUT, file));
+    await download.saveAs(join(out, file));
     console.log(`  ${file}  ${view} · ${theme}`);
   } catch (error) {
     failed++;
@@ -111,4 +117,4 @@ if (failed > 0) {
   process.exit(1);
 }
 
-console.log(`\n${wanted.length} written to public/posters/.`);
+console.log(`\n${wanted.length} written to public/posters/ and .github/images/.`);
