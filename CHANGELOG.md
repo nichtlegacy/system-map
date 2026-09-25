@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/nichtlegacy/system-map/compare/system-map-v0.1.0...system-map-v0.1.1) (2026-09-25)
+
+
+### Documentation
+
+* rewrite the README around what a reader needs first ([#1](https://github.com/nichtlegacy/system-map/issues/1)) ([496049c](https://github.com/nichtlegacy/system-map/commit/496049c060165dba37adcf3d273c98c3b513e546))
+
 ## 0.1.0 (2026-09-25)
 
 First public release.
