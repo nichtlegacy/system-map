@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-import { asset, NAME, SITE_DOMAIN, UMAMI } from "@/data/site";
+import { asset, NAME } from "@/data/site";
 
 import "./globals.css";
 
@@ -38,9 +38,6 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#0a0a0a" };
 
-// Baked in at build time: scripts/build-site.sh sets this origin for Pages.
-const analytics = process.env.NEXT_PUBLIC_SITE_URL === `https://${SITE_DOMAIN}`;
-
 const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.classList.add("theme-"+(t==="light"?"light":"dark"))}catch(e){document.documentElement.classList.add("theme-dark")}`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -52,11 +49,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        {analytics && (
-          // A plain tag rather than next/script, so the exported HTML carries
-          // it as written: deferred, with Umami's data attributes intact.
-          <script defer src={UMAMI.src} data-website-id={UMAMI.websiteId} data-domains={SITE_DOMAIN} />
-        )}
       </head>
       <body className="antialiased">{children}</body>
     </html>

@@ -175,7 +175,6 @@ export default function HomePage() {
           <div className="hero-rise mt-8 flex flex-wrap gap-2 [animation-delay:180ms]">
             <Link
               href="/example"
-              data-umami-event="open-example"
               className="group flex h-9 items-center gap-2 rounded-full bg-fg pl-4 pr-1.5 text-[13px] font-medium text-canvas transition-colors duration-300 ease-fluid hover:bg-fg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.98]"
             >
               Open the example
@@ -185,7 +184,6 @@ export default function HomePage() {
             </Link>
             <a
               href={REPO}
-              data-umami-event="github"
               className="bezel flex h-9 items-center rounded-full bg-surface px-4 text-[13px] text-fg-2 transition-colors duration-300 ease-fluid hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.98]"
             >
               View on GitHub
