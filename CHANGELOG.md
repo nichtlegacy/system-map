@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/nichtlegacy/system-map/compare/system-map-v0.1.0...system-map-v0.2.0) (2026-10-06)
+
+
+### Added
+
+* **site:** add self-hosted Umami analytics ([#3](https://github.com/nichtlegacy/system-map/issues/3)) ([e444e82](https://github.com/nichtlegacy/system-map/commit/e444e8233ef2ac51c5e049b79139466acab7d069))
+
+
+### Documentation
+
+* rewrite the README around what a reader needs first ([#1](https://github.com/nichtlegacy/system-map/issues/1)) ([496049c](https://github.com/nichtlegacy/system-map/commit/496049c060165dba37adcf3d273c98c3b513e546))
+
 ## 0.1.0 (2026-09-25)
 
 First public release.
