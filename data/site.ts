@@ -3,6 +3,17 @@ export const NAME = "System Map";
 export const REPO = "https://github.com/nichtlegacy/system-map";
 
 /**
+ * The project's own site, where GitHub Pages serves the landing page and the
+ * demo. Only a build for this origin loads the visit counter (cookieless,
+ * self-hosted Umami); a fork, the Docker image and `next dev` never do.
+ */
+export const SITE_DOMAIN = "system-map.nichtlegacy.com";
+export const UMAMI = {
+  src: "https://insights.nichtlegacy.com/v.js",
+  websiteId: "b4914e43-4e66-4805-9d6f-1909843938c1",
+};
+
+/**
  * A file under `public/`, as the browser has to ask for it. Next.js prefixes
  * its own links and scripts with the base path; a plain `<img src>` it does
  * not, so every public asset goes through here.
