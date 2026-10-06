@@ -42,8 +42,9 @@ The project stays deliberately:
   to click around in and no file format to lose.
 - **honest about colour** — every colour has a second cue: status carries a
   word, wires carry a dash pattern, bars print their value.
-- **static** — no database, no runtime data source, no analytics, no
-  authentication, no telemetry.
+- **static** — no database, no runtime data source, no authentication, no
+  telemetry, and no analytics in your build. Only the project's own site,
+  system-map.nichtlegacy.com, counts visits, with cookieless self-hosted Umami.
 
 > The included map is fictional. It uses `example.com` and IANA-reserved
 > documentation addresses (`192.0.2.0/24`, `2001:db8::/32`), so the repository
